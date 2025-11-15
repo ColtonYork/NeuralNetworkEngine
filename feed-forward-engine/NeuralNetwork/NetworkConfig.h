@@ -19,6 +19,6 @@ struct NetworkConfig
 
     //Architecture//
     int layers = 0;
-    std::string 
+    std::vector<LayerConfig> layerData;
 
 };
