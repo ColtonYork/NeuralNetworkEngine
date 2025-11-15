@@ -1,0 +1,12 @@
+[Network]
+Name: ChessBot
+Created: 2025-11-14
+
+[Architecture]
+Layers: 3
+LayerSizes: 32,64,10
+Activations: relu,relu,linear
+
+[Training]
+BatchSize: 64
+LearningRate: 0.01
