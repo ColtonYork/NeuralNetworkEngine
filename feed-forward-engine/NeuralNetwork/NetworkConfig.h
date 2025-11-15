@@ -20,5 +20,6 @@ struct NetworkConfig
     //Architecture//
     int layers = 0;
     std::vector<LayerConfig> layerData;
+    int delta;
 
 };
