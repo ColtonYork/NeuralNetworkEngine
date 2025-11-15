@@ -20,6 +20,8 @@ struct NetworkConfig
     //Architecture//
     int layers = 0;
     std::vector<LayerConfig> layerData;
-    int delta;
 
+    //Training//
+    int batch_size = 0;
+    float learning_rate = 0.0f;
 };
