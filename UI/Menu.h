@@ -8,4 +8,10 @@ namespace Menu
         output: string name of network
     */
     std::string nameNetwork();
+
+    /*
+        
+    */
+    int startMenu();
+
 }
