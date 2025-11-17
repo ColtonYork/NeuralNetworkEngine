@@ -1,12 +1,14 @@
 #include <string>
 #include <vector>
+#include "../enums/enums.h"
 
 
 
 struct LayerConfig
 {
     int layerSize = 0;
-    std::string activation = "";
+    ActivationFunction activation_function = ActivationFunction::None;
+    LayerType layer_type = LayerType::None;
 };
 
 

@@ -1,2 +1,4 @@
 make all:
-	g++ -std=c++17 -I. main.cpp UI/Menu.cpp -o neural_network_engine
+	g++ -std=c++17 -Wall -I./ -Icore -ILayers -INetworkEngineCore -IUI \
+    	./main.cpp ./UI/Menu.cpp \
+    	-o neuralNetworkEngine
