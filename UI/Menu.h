@@ -68,6 +68,23 @@ namespace Menu
         void displayLayerTypes();
 
 
+        /*
+            Brief: displays the types of activation functions the user can choose from
+            Input: none
+            output: none
+        */
+        void displayActivationTypes();
+
+        /*
+            Brief: Asks the user to input the activation function type for a specified layer
+            Input: 
+                LayerNum: The layer number that the question will display for
+            Output:
+                ActivationFunction: User's choice for the activation function for a specified layer layer
+        */
+        ActivationFunction enterActivationFunction(const int& layerNum);
+
+
 
 
     }

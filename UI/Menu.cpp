@@ -90,7 +90,33 @@ void displayLayerTypes()
         "2. Recurrent Layer\n\n";
     }
 
+void displayActivationTypes()
+    {
+        {
+            std::cout << '\n';
+            std::cout << 
+            "        Activation Functions     \n"
+            "---------------------------------\n"
+            "1. Sigmoid\n"
+            "2. Relu\n\n";
+        }
+    }
+
+ActivationFunction enterActivationFunction(const int& layerNum)
+{
+    int choiceInt = 0;
+
+    Menu::createNewNetwork::displayActivationTypes();
+    std::cout << "Select Activation function for layer " << layerNum << ": ";
+    std::cin >> choiceInt;
+
+    std::cout << '\n';
 
 
+    // convert to enum class
+    return static_cast<ActivationFunction>(choiceInt);
+    }
 }
+
+
 }
