@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include "../enums/enums.h"
 #include "UI/UIutils.h"
 
@@ -11,6 +12,8 @@ struct LayerConfig
     int layerSize = 0;
     LayerType layer_type = LayerType::None;
     ActivationFunction activation_function = ActivationFunction::None;
+
+    void outputLayerConfigData(const int& layerNum) const;
 
 };
 
@@ -29,6 +32,10 @@ struct NetworkConfig
     //Training//
     int batch_size = 0;
     float learning_rate = 0.0f;
+    int epochs = 0;
+    float loss = 0.0f;
 
     void outputNetworkConfigData() const;
+
+    void outputAllLayerConfigs() const;
 };

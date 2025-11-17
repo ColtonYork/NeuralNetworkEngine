@@ -29,7 +29,17 @@ int main(const int argc, const char *argv[])
                     layer_config.layerSize = Menu::createNewNetwork::enterLayerSize(i);
                     layer_config.layer_type = Menu::createNewNetwork::enterLayerType(i);
                     layer_config.activation_function = Menu::createNewNetwork::enterActivationFunction(i);
+
+                    network_config.layerData.push_back(layer_config);
     
                 }
+
+            std::cout << "\n\n\n\n";
+
+            network_config.outputNetworkConfigData();
+
+            std::cout << "\n\n\n\n";
+
+            network_config.outputAllLayerConfigs();
         }
 }
