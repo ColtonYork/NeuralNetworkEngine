@@ -1,5 +1,5 @@
 #include <string>
-#include "enums/enums.h"
+#include "../core/enums/enums.h"
 namespace Menu
 {
 
@@ -84,8 +84,20 @@ namespace Menu
         */
         ActivationFunction enterActivationFunction(const int& layerNum);
 
+        /*
+            Brief: Asks the user to input the path to their input data file
+            Input: none
+            Output:
+                std::string path to input data file
+        */
+        std::string enter_input_data_file_path();
 
-
+        /*
+            Brief: outputs an example file to the terminal to show user the intended input data file format
+            Input: none
+            Output: none
+        */
+        void output_input_data_file_format();
 
     }
 }

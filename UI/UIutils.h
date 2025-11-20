@@ -1,6 +1,6 @@
 #include <string>
 #include <algorithm>
-#include "../enums/enums.h"
+#include "../core/enums/enums.h"
 
 
 namespace UIutils

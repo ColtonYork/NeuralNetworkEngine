@@ -11,7 +11,6 @@ class Layer
     protected:
     std::vector<float> weights;
     std::vector<float> biases;
-
     int input_size;
     int output_size;
 

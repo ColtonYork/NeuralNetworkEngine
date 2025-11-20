@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
-#include "../enums/enums.h"
-#include "UI/UIutils.h"
+#include "../../core/enums/enums.h"
+#include "../../UI/UIutils.h"
 
 
 
@@ -34,6 +34,9 @@ struct NetworkConfig
     float learning_rate = 0.0f;
     int epochs = 0;
     float loss = 0.0f;
+
+    //training data
+    std::string input_data_file_path = "";
 
     void outputNetworkConfigData() const;
 

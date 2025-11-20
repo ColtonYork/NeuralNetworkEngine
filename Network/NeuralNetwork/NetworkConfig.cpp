@@ -33,6 +33,8 @@ void LayerConfig::outputLayerConfigData(const int& layerNum) const
     std::cout << std::setw(80) << std::right << "|\n";
     std::cout << "                  | Layer " << layerNum << " activation function: " << UIutils::ActivationFunctionToString(activation_function);
     std::cout << std::setw(80) << std::right << "|\n";
+    std::cout << "                  ---------------------------------------------------------------------------------------------------\n";
+
 }
 
 

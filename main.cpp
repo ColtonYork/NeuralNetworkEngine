@@ -33,13 +33,7 @@ int main(const int argc, const char *argv[])
                     network_config.layerData.push_back(layer_config);
     
                 }
-
-            std::cout << "\n\n\n\n";
-
-            network_config.outputNetworkConfigData();
-
-            std::cout << "\n\n\n\n";
-
-            network_config.outputAllLayerConfigs();
+            
+            network_config.input_data_file_path = Menu::createNewNetwork::enter_input_data_file_path();
         }
 }
