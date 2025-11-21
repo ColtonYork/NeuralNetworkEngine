@@ -9,8 +9,8 @@ namespace Menu
         std::cout << 
         "        NEURAL NETWORK ENGINE\n" 
         "----------------------------------------- \n" 
-        "1. Create new network\n" 
-        "2. Load a Network\n";
+        "1. Create new network confiuguration\n" 
+        "2. Train/Load a Network\n";
 
         int choice = 0;
         std::cin >> choice;
@@ -19,6 +19,46 @@ namespace Menu
 
         return choice; 
     }
+
+    bool create_new_network_selected()
+    {
+        NetworkConfig network_config;
+
+            network_config.network_name = Menu::createNewNetwork::nameNetwork();
+            network_config.layers = Menu::createNewNetwork::enterNumOfLayers();
+
+            //input layer
+            LayerConfig input_layer_config;
+            input_layer_config.layerSize = Menu::createNewNetwork::enterInputLayerSize();
+            network_config.layerData.push_back(input_layer_config);
+
+            //rest of layers
+            for (int i = 1; i < network_config.layers; i++)
+                {
+                    LayerConfig layer_config;
+
+                    layer_config.layerSize = Menu::createNewNetwork::enterLayerSize(i);
+                    layer_config.layer_type = Menu::createNewNetwork::enterLayerType(i);
+                    layer_config.activation_function = Menu::createNewNetwork::enterActivationFunction(i);
+
+                    network_config.layerData.push_back(layer_config);
+    
+                }
+        
+        network_config.batch_size = Menu::createNewNetwork::enter_batch_size();
+        network_config.learning_rate = Menu::createNewNetwork::enter_learning_rate();
+        network_config.input_data_file_path = Menu::createNewNetwork::enter_input_data_file_path();
+
+        if (Menu::createNewNetwork::networked_created(network_config))
+                return 1;
+
+        std::cout << "\nNetwrok Discarded. Returning to menu\n";
+        return 0;
+
+        
+
+    }
+
 
 namespace createNewNetwork
 {
@@ -137,15 +177,16 @@ namespace createNewNetwork
             if (!input_stream.is_open())
                 {
                     std::cout << "[ERROR][Could not open input data file given]\n";
+                    input_stream.close();
                     return "error";
                 }
             else 
                 {
                     std::cout << "File successfuly loaded.\n";
+                    input_stream.close();
                     return input_data_path;
                 }
 
-            input_stream.close();
         }
 
     void output_input_data_file_format()
@@ -160,7 +201,102 @@ namespace createNewNetwork
         }
 
 
+    float enter_learning_rate()
+        {
+            float learning_rate = 0.0f;
+
+            std::cout << "Enter learning rate for this network: ";
+            std::cin >> learning_rate;
+
+            return learning_rate;
+        }
+
+
+    int enter_batch_size()
+        {
+            int batch_size = 0;
+
+            std::cout << "Enter batch size for this network: ";
+            std::cin >> batch_size;
+
+            return batch_size;
+        }
+
+
+    bool ask_to_save_network_configuration(const NetworkConfig& config)
+        {
+            std::string choice = "";
+            config.outputNetworkConfigData(std::cout);
+            std::cout << "\nSave this configuration? (y/n): ";
+            std::cin >> choice;
+
+            if ((choice == "Y") || (choice == "y"))
+                return 1;
+
+            return 0;
+        }
+
+    std::string enter_output_data_file_path()
+        {
+            std::string output_file_path = "";
+
+            std::cout << "Enter save file path to save config: ";
+            std::cin >> output_file_path;
+
+            std::ofstream output_file;
+            output_file.open((output_file_path));
+
+                if (!output_file.is_open())
+                    {
+                        output_file.close();
+                        return output_file_path;
+                    }
+
+                else 
+                    {
+                        output_file.close();
+                        std::cout << "\n[ERROR][Could not open output file]\n";
+                        return "";
+                    }
+        }
+
+    bool networked_created(NetworkConfig& config)
+        {
+
+        while (true)
+                {
+                    bool save = createNewNetwork::ask_to_save_network_configuration(config);
+
+                    //if network is saved, it will return a date created variable
+                    if (save) 
+                        {   
+                            config.save_file_path = Menu::createNewNetwork::enter_output_data_file_path();
+                            if (config.save_config())
+                                {
+                                    config.save_current_date();
+                                    return 1;
+                                }
+                            else
+                                {
+                                    std::string choice = "";
+                                    std::cout << "Data failed to save, try to save again? (y/n): ";
+                                    std::cin >> choice;
+
+                                    if (choice == "Y" || choice != "y")
+                                        continue;
+                                }
+                        }
         
+                    else 
+                        return 0;
+            
+                    }
+
+        }
+
+
+
+
 
     //createNewNetwork namespace
     }

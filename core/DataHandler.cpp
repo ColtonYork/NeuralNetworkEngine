@@ -20,7 +20,7 @@ namespace DataHandler
             return_vector.resize(input_size);
 
             //load data into vector
-            int i = 0;
+            size_t i = 0;
             while (i < input_size && input_data_file >> return_vector[i])
                 {i++;}
 

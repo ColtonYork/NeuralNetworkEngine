@@ -1,5 +1,6 @@
 #include <string>
 #include "../core/enums/enums.h"
+#include "../Network/NeuralNetwork/NetworkConfig.h"
 namespace Menu
 {
 
@@ -10,6 +11,15 @@ namespace Menu
             Int: User's choice
     */
    int startMenu();
+
+
+   /*
+        Brief: The serires of UI displays when user selects 'create new network' from start menu
+        Input: none
+        Output:
+            Network Configuration of Users network 
+   */
+    bool create_new_network_selected();
 
 
     namespace createNewNetwork
@@ -93,11 +103,57 @@ namespace Menu
         std::string enter_input_data_file_path();
 
         /*
+            Brief: Asks the user to input the path to their outpus/save data file
+            Input: none
+            Output:
+                std::string path to save data file
+        */
+        std::string enter_output_data_file_path();
+
+        /*
             Brief: outputs an example file to the terminal to show user the intended input data file format
             Input: none
             Output: none
         */
         void output_input_data_file_format();
+
+        /*
+            Brief: Asks the user to set a batch size for the network configuration
+            Input: none
+            Output:
+                int batch size for config
+        */
+        int enter_batch_size();
+        
+
+        /*
+            Brief: Asks the user to set a learning rate for the network configuration
+            Input: none
+            Output:
+                Float learning rate for config
+        */
+        float enter_learning_rate();
+
+        /*
+            Brief: Outputs the network config data and asks user if they want to save it.
+            input: 
+                config: The cofiguration that the user will ask to be asved or not
+            Output:
+                Boolean: 1 to save. 0 to discard
+        */
+        bool ask_to_save_network_configuration(const NetworkConfig& config);
+
+        /*
+            Brief: returns true if a netwrok was saved after user selects 'create new netwrok configuration' from menu
+            Input: 
+                none
+            Output: if a network was created/saves 
+        */
+        bool networked_created(NetworkConfig& config);
+
+
+
+
 
     }
 }
