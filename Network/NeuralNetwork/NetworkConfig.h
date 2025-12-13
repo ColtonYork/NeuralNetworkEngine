@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <ctime>
 #include <fstream>
+#include <filesystem>
 #include "../../core/enums/enums.h"
 #include "../../UI/UIutils.h"
 
@@ -52,13 +53,13 @@ struct NetworkConfig
     void save_current_date();
 
     /*
-    Brief: Saves the users configuration into a file they choose
+    Brief: Saves the users configuration to the directory in 'loadSaveParameters'
     Input:
         string file path to desired output file location
     Output:
         file succesfully saved or not
     */
-    bool save_config(const std::string& output_file_path) const;
+    bool save_config_defualt_location() const;
 
     
     /*
@@ -70,6 +71,15 @@ struct NetworkConfig
     bool save_config() const;
 
     void reset_date_created();
+
+    /*
+        Brief: outputs Networkconfig/LayerConfig data in save file parsing format
+        Input: 
+            Output file
+        Output: none
+    */
+    void outputNetworkConfigDataFileFormat(std::ostream& stream) const;
+    void outputLayerConfigDataFileFormat(std::ostream& stream) const;
 
 
 };

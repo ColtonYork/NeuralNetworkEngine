@@ -1,128 +1,136 @@
-# include "NetworkConfig.h"
+#include "NetworkConfig.h"
 #include <fstream>
 #include <ostream>
 
+void NetworkConfig::outputNetworkConfigData(std::ostream &stream) const {
+  stream << "  " << UIutils::to_upper(network_name)
+         << " CONFIGURATION DATA        \n"
+            "--------------------------------\n";
+  stream << "//NETWORK DETAILS//\n";
+  stream << "Network Name: " << network_name << '\n';
+  stream << "Date Created: " << date_created << '\n';
 
-void NetworkConfig::outputNetworkConfigData(std::ostream& stream) const
-{
-    stream << "  " <<
-    UIutils::to_upper(network_name) << " CONFIGURATION DATA        \n"
-    "--------------------------------\n";
-    stream << "//NETWORK DETAILS//\n";
-    stream << "Network Name: " << network_name << '\n';
-    stream << "Date Created: " << date_created << '\n';
+  stream << '\n';
+  stream << "//ARCHITECTURE//\n";
+  stream << "Number of Layers: " << layers << '\n';
 
-    stream << '\n';
-    stream << "//ARCHITECTURE//\n";
-    stream << "Number of Layers: " << layers << '\n';
-    
-    stream << '\n';
-    stream << "//TRAINING//\n";
-    stream << "Epochs trained: " << epochs_trained << '\n';
-    stream << "Loss of last epoch: " << loss << '\n';
-    stream << "Learning rate: " << learning_rate << '\n';
-    stream << "Batch size: " << batch_size << '\n';
-    
-    stream << '\n';
+  stream << '\n';
+  stream << "//TRAINING//\n";
+  stream << "Epochs trained: " << epochs_trained << '\n';
+  stream << "Loss of last epoch: " << loss << '\n';
+  stream << "Learning rate: " << learning_rate << '\n';
+  stream << "Batch size: " << batch_size << '\n';
+
+  stream << '\n';
 }
 
-void LayerConfig::outputLayerConfigData(const int& layerNum, std::ostream& stream) const
+void LayerConfig::outputLayerConfigData(const int &layerNum, std::ostream &stream) const 
 {
-    stream << "                  ---------------------------------------------------------------------------------------------------\n";
-    stream << "                  | Layer " << layerNum << " size: " << layerSize;
-    stream << std::setw(80) << std::right << "|\n"; // std::setw, std::right
-    stream << " Layer " << layerNum << "          | Layer " << layerNum << " layer type: " << UIutils::LayerTypeToString(layer_type);
-    stream << std::setw(80) << std::right << "|\n";
-    stream << "                  | Layer " << layerNum << " activation function: " << UIutils::ActivationFunctionToString(activation_function);
-    stream << std::setw(80) << std::right << "|\n";
-    stream << "                  ---------------------------------------------------------------------------------------------------\n";
-
+  stream << "                  "
+            "------------------------------------------------------------------"
+            "---------------------------------\n";
+  stream << "                  | Layer " << layerNum << " size: " << layerSize;
+  stream << std::setw(80) << std::right << "|\n"; // std::setw, std::right
+  stream << " Layer " << layerNum << "          | Layer " << layerNum
+         << " layer type: " << UIutils::LayerTypeToString(layer_type);
+  stream << std::setw(80) << std::right << "|\n";
+  stream << "                  | Layer " << layerNum << " activation function: "
+         << UIutils::ActivationFunctionToString(activation_function);
+  stream << std::setw(80) << std::right << "|\n";
+  stream << "                  "
+            "------------------------------------------------------------------"
+            "---------------------------------\n";
 }
 
-void NetworkConfig::outputAllLayerConfigs(std::ostream& stream) const
-{
-    for(size_t i = 0; i < layerData.size(); i++)
-        {
-            layerData[i].outputLayerConfigData(i, stream);
-        }
+void NetworkConfig::outputAllLayerConfigs(std::ostream &stream) const {
+  for (size_t i = 0; i < layerData.size(); i++) {
+    layerData[i].outputLayerConfigData(i, stream);
+  }
 }
 
+void NetworkConfig::save_current_date() {
+  std::time_t t = std::time(nullptr);
+  std::tm *now = std::localtime(&t);
 
-void NetworkConfig::save_current_date()
-{
-    std::time_t t = std::time(nullptr);
-    std::tm* now = std::localtime(&t);
+  int year = now->tm_year + 1900;
+  int month = now->tm_mon + 1;
+  int day = now->tm_mday;
 
-    int year = now->tm_year + 1900;
-    int month = now->tm_mon + 1;
-    int day = now->tm_mday;
+  // Build string manually (no advanced syntax)
+  std::string date = "Created: ";
+  date += std::to_string(year);
+  date += "-";
 
-    // Build string manually (no advanced syntax)
-    std::string date = "Created: ";
-    date += std::to_string(year);
-    date += "-";
+  // zero pad month
+  if (month < 10)
+    date += "0";
+  date += std::to_string(month);
+  date += "-";
 
-    // zero pad month
-    if (month < 10) date += "0";
-    date += std::to_string(month);
-    date += "-";
+  // zero pad day
+  if (day < 10)
+    date += "0";
+  date += std::to_string(day);
 
-    // zero pad day
-    if (day < 10) date += "0";
-    date += std::to_string(day);
-
-    date_created = date;
-
+  date_created = date;
 }
 
-bool NetworkConfig::save_config(const std::string& output_file_path) const
+bool NetworkConfig::save_config_defualt_location() const 
 {
-    std::ofstream output_file;
-    output_file.open((output_file_path));
+    std::filesystem::path save_dir = std::filesystem::path("SaveConfigs") / network_name;
 
-    if (!output_file.is_open())
-        {
-            std::cout << "\n[Error][Could not open output file]\n";
-            return 0;
-        }
+    // Create the directory and any missing parent directories
+    if (!std::filesystem::exists(save_dir)) 
+      std::filesystem::create_directories(save_dir);
 
-    else 
-        {
-            outputNetworkConfigData(output_file);
-            output_file << "\n+/n";
-            outputAllLayerConfigs(output_file);
-            output_file.close();
-            return 1;
-        }
+    // Construct the full file path: SaveConfigs/<network_name>/config.txt
+    std::filesystem::path config_path = save_dir / "config.txt";
+
+    // Open the file for writing
+    std::ofstream file(config_path);
+
+    if (!file.is_open()) 
+      {
+          std::cerr << "Error: Failed to open " << config_path << " for writing." << std::endl;
+          return false;
+      }
+
+    // Write the configuration to the file using your existing helper methods
+    outputNetworkConfigDataFileFormat(file);
+    outputLayerConfigDataFileFormat(file);
+
+    file.close();
+    return true;
 }
 
-bool NetworkConfig::save_config() const
+bool NetworkConfig::save_config() const 
 {
-    std::ofstream output_file;
-    output_file.open((save_file_path));
+  std::ofstream output_file;
+  output_file.open((save_file_path));
 
+  if (!output_file.is_open()) {
+    std::cout << "\n[Error][Could not open save file]\n";
+    return 0;
+  }
 
-    if (!output_file.is_open())
-        {
-            std::cout << "\n[Error][Could not open save file]\n";
-            return 0;
-        }
-
-    else 
-        {
-            outputNetworkConfigData(output_file);
-            output_file << "\n+/n";
-            outputAllLayerConfigs(output_file);
-            output_file.close();
-            return 1;
-        }
+  else {
+    outputNetworkConfigData(output_file);
+    output_file << "\n+/n";
+    outputAllLayerConfigs(output_file);
+    output_file.close();
+    return 1;
+  }
 }
 
+void NetworkConfig::reset_date_created() { date_created = ""; }
 
-void NetworkConfig::reset_date_created()
+void NetworkConfig::outputNetworkConfigDataFileFormat(std::ostream& stream) const
 {
-    date_created = "";
+  return;
 }
 
-
+void NetworkConfig::outputLayerConfigDataFileFormat(std::ostream& stream) const
+{
+  return;
+}
 

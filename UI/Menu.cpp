@@ -50,9 +50,12 @@ namespace Menu
         network_config.input_data_file_path = Menu::createNewNetwork::enter_input_data_file_path();
 
         if (Menu::createNewNetwork::networked_created(network_config))
+            {
+                std::cout << "\nNetwork saved succesfully. Returning to menu\n\n";
                 return 1;
-
-        std::cout << "\nNetwrok Discarded. Returning to menu\n";
+            }
+        
+        std::cout << "\nNetwork Discarded. Returning to menu\n\n";
         return 0;
 
         
@@ -270,8 +273,8 @@ namespace createNewNetwork
                     //if network is saved, it will return a date created variable
                     if (save) 
                         {   
-                            config.save_file_path = Menu::createNewNetwork::enter_output_data_file_path();
-                            if (config.save_config())
+                            //config.save_file_path = Menu::createNewNetwork::enter_output_data_file_path();
+                            if (config.save_config_defualt_location())
                                 {
                                     config.save_current_date();
                                     return 1;
