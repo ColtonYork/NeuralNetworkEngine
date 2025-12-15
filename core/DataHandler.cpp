@@ -29,4 +29,36 @@ namespace DataHandler
             return return_vector;
             
         }
+
+    std::vector<std::string> load_user_network_names()
+        {
+            std::ifstream stream;
+            stream.open("UserData/userData.txt");
+
+            std::vector<std::string> names;
+            std::string temp_name;
+
+            while (stream >> temp_name) 
+                names.push_back(temp_name);
+
+            return names;
+        }
+
+
+
+    void add_new_network_name(const std::string& name)
+        {
+            std::vector<std::string> names = load_user_network_names();
+
+            names.push_back(name);
+
+            std::ofstream stream;
+            stream.open("UserData/userData.txt");
+
+            for (int i = 0; i < names.size(); i++)
+                {
+                    stream << names[i] << '\n';
+                }
+        }
+
 };

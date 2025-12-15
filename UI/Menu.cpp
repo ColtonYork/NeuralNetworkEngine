@@ -63,6 +63,45 @@ namespace Menu
     }
 
 
+    bool train_a_network_selected()
+    {
+        std::string s = trainANetwork::ask_user_to_select_their_netowrk();
+
+        std::cout << '\n' << s << '\n';
+
+        return 1;
+    }
+
+namespace trainANetwork
+{
+    void display_users_saved_netowrks()
+        {
+            std::vector<std::string> names = DataHandler::load_user_network_names();
+            
+            for (const auto& name : names)
+                std::cout << name << '\n';
+
+        }
+
+    std::string ask_user_to_select_their_netowrk()
+        {
+            std::cout << "\n---------------------------------------\n";
+            display_users_saved_netowrks();
+            std::cout << "---------------------------------------\n";
+
+
+            std::cout << "Select one of yor Netowrks to train: ";
+
+            std::string s;
+            std::cin >> s;
+            return s;
+        }
+
+
+
+}
+
+
 namespace createNewNetwork
 {
     std::string nameNetwork()
@@ -249,7 +288,7 @@ namespace createNewNetwork
             std::ofstream output_file;
             output_file.open((output_file_path));
 
-                if (!output_file.is_open())
+                if (output_file.is_open())
                     {
                         output_file.close();
                         return output_file_path;

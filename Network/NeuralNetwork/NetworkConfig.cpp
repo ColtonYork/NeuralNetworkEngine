@@ -77,28 +77,22 @@ void NetworkConfig::save_current_date() {
 
 bool NetworkConfig::save_config_defualt_location() const 
 {
-    std::filesystem::path save_dir = std::filesystem::path("SaveConfigs") / network_name;
+    std::filesystem::path save_dir = std::filesystem::path("UserData") / "SaveConfigs" / network_name;
 
-    // Create the directory and any missing parent directories
     if (!std::filesystem::exists(save_dir)) 
       std::filesystem::create_directories(save_dir);
 
-    // Construct the full file path: SaveConfigs/<network_name>/config.txt
     std::filesystem::path config_path = save_dir / "config.txt";
 
-    // Open the file for writing
     std::ofstream file(config_path);
-
     if (!file.is_open()) 
       {
           std::cerr << "Error: Failed to open " << config_path << " for writing." << std::endl;
           return false;
       }
-
-    // Write the configuration to the file using your existing helper methods
+      
     outputNetworkConfigDataFileFormat(file);
     outputLayerConfigDataFileFormat(file);
-
     file.close();
     return true;
 }

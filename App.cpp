@@ -13,7 +13,10 @@ void App::run() const
                             continue;
                         }
                     case 2:
-                        continue;
+                        {
+                            Menu::train_a_network_selected();
+                            continue;
+                        }
                         
                     default:
                         continue;

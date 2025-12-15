@@ -1,6 +1,8 @@
 #include <string>
 #include "../core/enums/enums.h"
 #include "../Network/NeuralNetwork/NetworkConfig.h"
+#include "../core/DataHandler.h"
+
 namespace Menu
 {
 
@@ -16,11 +18,37 @@ namespace Menu
    /*
         Brief: The serires of UI displays when user selects 'create new network' from start menu
         Input: none
-        Output:
-            Network Configuration of Users network 
+        Output: irrelevant i think
    */
     bool create_new_network_selected();
 
+
+    /*
+        Brief: The serires of UI displays when user selects 'train a network' from start menu
+        Input: none
+        Output: irrelevant i think
+   */
+    bool train_a_network_selected();
+
+    namespace trainANetwork
+    {
+
+        /*
+            Brief: Asks user to select their network and returns it as a string
+            Input: none
+            Output: 
+                string of users' netowrk name
+
+        */
+        std::string ask_user_to_select_their_netowrk();   
+
+        /*
+            Brief: displays the name of all of the users' saved networks
+            Inpout: None
+            Output: None
+        */
+        void display_users_saved_netowrks();
+    }
 
     namespace createNewNetwork
     {
