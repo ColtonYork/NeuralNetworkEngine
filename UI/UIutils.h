@@ -10,4 +10,6 @@ namespace UIutils
     std::string ActivationFunctionToString(ActivationFunction af);
 
     std::string LayerTypeToString(LayerType lt);
+
+    std::string returnStringIfNotEmpty(const std::string& s);
 }

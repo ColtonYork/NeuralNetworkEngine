@@ -45,4 +45,14 @@ std::string LayerTypeToString(LayerType lt)
 
     return "error";
 }
+
+
+std::string returnStringIfNotEmpty(const std::string& s)
+{
+    if ( s == "")
+        return "-";
+
+    return s;
+}
+
 }

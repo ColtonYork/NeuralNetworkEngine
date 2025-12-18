@@ -120,6 +120,20 @@ void NetworkConfig::reset_date_created() { date_created = ""; }
 
 void NetworkConfig::outputNetworkConfigDataFileFormat(std::ostream& stream) const
 {
+  stream << UIutils::returnStringIfNotEmpty(network_name) << '\n';
+  stream << UIutils::returnStringIfNotEmpty(date_created) << '\n';
+
+  stream << batch_size << '\n';
+  stream << learning_rate << '\n';
+
+  stream << epochs_trained << '\n';
+  stream << loss << '\n';
+
+  stream << UIutils::returnStringIfNotEmpty(input_data_file_path) << '\n';
+  stream << UIutils::returnStringIfNotEmpty(save_file_path) << '\n';
+
+  stream << '\n';
+
   return;
 }
 
