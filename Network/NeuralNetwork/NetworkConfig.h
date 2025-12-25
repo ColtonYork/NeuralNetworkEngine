@@ -18,6 +18,9 @@ struct LayerConfig
 
     void outputLayerConfigData(const int& layerNum, std::ostream& stream) const;
 
+    void outputLayerConfigDataFileFormat(std::ostream& stream) const;
+
+
 };
 
 
@@ -49,6 +52,8 @@ struct NetworkConfig
     void outputNetworkConfigData(std::ostream& stream) const;
 
     void outputAllLayerConfigs(std::ostream& stream) const;
+    void outputAllLayerConfigFileFormat(std::ostream& stream) const;
+
 
     void save_current_date();
 
@@ -59,7 +64,7 @@ struct NetworkConfig
     Output:
         file succesfully saved or not
     */
-    bool save_config_defualt_location() const;
+    bool save_config_defualt_location();
 
     
     /*
@@ -68,7 +73,7 @@ struct NetworkConfig
         Output:
             bool succesfulness of save
     */
-    bool save_config() const;
+    bool save_config_to_save_file_path() const;
 
     void reset_date_created();
 
@@ -79,7 +84,6 @@ struct NetworkConfig
         Output: none
     */
     void outputNetworkConfigDataFileFormat(std::ostream& stream) const;
-    void outputLayerConfigDataFileFormat(std::ostream& stream) const;
 
 
 };

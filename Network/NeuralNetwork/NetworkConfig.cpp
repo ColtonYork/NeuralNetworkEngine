@@ -24,8 +24,8 @@ void NetworkConfig::outputNetworkConfigData(std::ostream &stream) const {
   stream << '\n';
 }
 
-void LayerConfig::outputLayerConfigData(const int &layerNum, std::ostream &stream) const 
-{
+void LayerConfig::outputLayerConfigData(const int &layerNum,
+                                        std::ostream &stream) const {
   stream << "                  "
             "------------------------------------------------------------------"
             "---------------------------------\n";
@@ -57,7 +57,7 @@ void NetworkConfig::save_current_date() {
   int day = now->tm_mday;
 
   // Build string manually (no advanced syntax)
-  std::string date = "Created: ";
+  std::string date = "";
   date += std::to_string(year);
   date += "-";
 
@@ -75,30 +75,29 @@ void NetworkConfig::save_current_date() {
   date_created = date;
 }
 
-bool NetworkConfig::save_config_defualt_location() const 
-{
-    std::filesystem::path save_dir = std::filesystem::path("UserData") / "SaveConfigs" / network_name;
+bool NetworkConfig::save_config_defualt_location() {
+  std::filesystem::path save_dir =  std::filesystem::path("UserData") / "SaveConfigs" / network_name;
+    save_file_path = save_dir.string();
 
-    if (!std::filesystem::exists(save_dir)) 
-      std::filesystem::create_directories(save_dir);
+  if (!std::filesystem::exists(save_dir))
+    std::filesystem::create_directories(save_dir);
 
-    std::filesystem::path config_path = save_dir / "config.txt";
+  std::filesystem::path config_path = save_dir / "config.txt";
+  std::ofstream file(config_path);
 
-    std::ofstream file(config_path);
-    if (!file.is_open()) 
-      {
-          std::cerr << "Error: Failed to open " << config_path << " for writing." << std::endl;
-          return false;
-      }
-      
-    outputNetworkConfigDataFileFormat(file);
-    outputLayerConfigDataFileFormat(file);
-    file.close();
-    return true;
+  if (!file.is_open()) {
+    std::cerr << "Error: Failed to open " << config_path << " for writing."
+              << std::endl;
+    return false;
+  }
+
+  outputNetworkConfigDataFileFormat(file);
+  outputAllLayerConfigFileFormat(file);
+  file.close();
+  return true;
 }
 
-bool NetworkConfig::save_config() const 
-{
+bool NetworkConfig::save_config_to_save_file_path() const {
   std::ofstream output_file;
   output_file.open((save_file_path));
 
@@ -108,9 +107,9 @@ bool NetworkConfig::save_config() const
   }
 
   else {
-    outputNetworkConfigData(output_file);
-    output_file << "\n+/n";
-    outputAllLayerConfigs(output_file);
+    outputNetworkConfigDataFileFormat(output_file);
+    output_file << '\n';
+    outputAllLayerConfigFileFormat(output_file);
     output_file.close();
     return 1;
   }
@@ -118,8 +117,8 @@ bool NetworkConfig::save_config() const
 
 void NetworkConfig::reset_date_created() { date_created = ""; }
 
-void NetworkConfig::outputNetworkConfigDataFileFormat(std::ostream& stream) const
-{
+void NetworkConfig::outputNetworkConfigDataFileFormat(
+    std::ostream &stream) const {
   stream << UIutils::returnStringIfNotEmpty(network_name) << '\n';
   stream << UIutils::returnStringIfNotEmpty(date_created) << '\n';
 
@@ -131,14 +130,20 @@ void NetworkConfig::outputNetworkConfigDataFileFormat(std::ostream& stream) cons
 
   stream << UIutils::returnStringIfNotEmpty(input_data_file_path) << '\n';
   stream << UIutils::returnStringIfNotEmpty(save_file_path) << '\n';
+  stream << layers;
 
   stream << '\n';
-
-  return;
+  stream << '-';
+  stream << '\n';
 }
 
-void NetworkConfig::outputLayerConfigDataFileFormat(std::ostream& stream) const
-{
-  return;
+void LayerConfig::outputLayerConfigDataFileFormat(std::ostream &stream) const {
+  stream << layerSize << '\n';
+  stream << UIutils::LayerTypeToString(layer_type) << '\n';
+  stream << UIutils::ActivationFunctionToString(activation_function) << '\n';
 }
 
+void NetworkConfig::outputAllLayerConfigFileFormat(std::ostream &stream) const {
+  for (const auto &layer : layerData)
+    layer.outputLayerConfigDataFileFormat(stream);
+}

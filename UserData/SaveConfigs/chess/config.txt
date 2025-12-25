@@ -1,0 +1,16 @@
+chess
+Created: 2025-12-24
+64
+1.01
+0
+0
+error
+UserData/SaveConfigs/chess
+2
+-
+20
+NONE
+NONE
+25
+Dense
+Sigmoid
