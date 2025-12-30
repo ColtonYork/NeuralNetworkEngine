@@ -6,7 +6,7 @@ __global__ void addArray(float* arr, int add, size_t n){
     if (idx < n)
         arr[idx] += add;
 
-    printf("Thread %d added %d to index %d, new value: %f\n", idx, add, idx, arr[idx]);
+    //printf("Thread %d added %d to index %d, new value: %f\n", idx, add, idx, arr[idx]);
 
 }
 }

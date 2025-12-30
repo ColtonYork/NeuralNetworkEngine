@@ -2,7 +2,6 @@
 #include "GPUmath.h"
 #include "kernels.h"
 #include <cuda_runtime.h>
-#include <cuda_runtime_api.h>
 
 constexpr int DEFAULT_THREADS_PER_BLOCK = 256;
 namespace GPU {
