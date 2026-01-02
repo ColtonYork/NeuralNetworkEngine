@@ -1,3 +1,1 @@
-/usr/bin/ld: /tmp/tmpxft_000017a7_00000000-20_Math.o: in function `Math::matMul(std::vector<float, std::allocator<float> >&, std::vector<float, std::allocator<float> >&, std::vector<float, std::allocator<float> >&, bool)':
-Math.cpp:(.text+0xc2): undefined reference to `GPU::matMul(float*, float*, float*, unsigned long)'
-collect2: error: ld returned 1 exit status
+nvcc -std=c++17 -I./     main.cpp     App.cpp     Network/NeuralNetwork/NetworkConfig.cpp     UI/Menu.cpp     UI/UIutils.cpp     core/DataHandler.cpp     core/Math/CPUmath/CPUmath.cpp     core/Math/Math.cpp     core/Math/GPUmath/GPUmath.cu     core/Math/GPUmath/kernels.cu     -o neuralNetworkEngine

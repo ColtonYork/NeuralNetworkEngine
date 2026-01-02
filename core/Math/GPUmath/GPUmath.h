@@ -24,6 +24,7 @@ namespace GPU
           N: Array size
         Output:
           Stored in array C
+    *
     */
-    void matMul(float* A, float* B, float* C, size_t N);              
+    void matMul(float* A, float* B, float* C, size_t M, size_t K, size_t N);
 }
